@@ -1,3 +1,9 @@
+/*
+ * @(#) Recorder.java 2014. 9. 5 
+ *
+ * Copyright 2014 NHN Ent. All rights Reserved. 
+ * NHN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
 package com.baron.dicegame;
 
 import java.util.List;
@@ -8,36 +14,52 @@ import com.baron.dicegame.player.Player;
 
 public class Recorder {
 
-	//모든 플레이어의 스코어를 기록한다
+	/**
+	 * 모든 플레이어의 스코어를 기록한다
+	 *
+	 * @param 플레이어 목록
+	 */
 	public void printScores(List<Player> players) {
-		System.out.print("[ ");
+		StringBuffer message = new StringBuffer();
 		
-		for (int i = 0; i < players.size(); i++) {
-			Player player = players.get(i);
-			System.out.print(player.getName() + ":" + player.getTotalScore() +
-					getDiceMode(player.getDice()) + " ");
+		message.append("[ ");
+		for (Player player : players) {
+			message.append(player.getName() + ":" + player.getTotalScore() + getDiceMode(player.getDice()) + " ");
 		}
+		message.append("]");
 		
-		System.out.println("]");
+		System.out.println(message);
 	}
 
-	//주사위의 상태를 표현하는 문자열을 반환한다
+	/**
+	 * 주사위의 상태를 표현하는 문자열을 반환한다
+	 *
+	 * @param dice the dice
+	 * @return the dice mode
+	 */
 	private String getDiceMode(Dice dice) {
 		if (!(dice instanceof FraudDice)) {
 			return "";
 		}
 		
 		FraudDice fraudDice = (FraudDice) dice;
-		if (fraudDice.getMode() == Mode.NORMAL) {
-			return "[NORMAL]";
-		}else if (fraudDice.getMode() == Mode.STRONG) {
-			return "[STRONG]";
-		}else{
-			return "[WEAK]";
+		switch (fraudDice.getMode()) {
+			case NORMAL:
+				return "[NORMAL]";
+				
+			case STRONG:
+				return "[STRONG]";
+
+			default:
+				return "[WEAK]";
 		}
 	}
 	
-	//승자를 기록한다
+	/**
+	 * 승자를 기록한다
+	 *
+	 * @param 우승자
+	 */
 	public void printWinner(Player winner){
 		if (winner != null) {
 			System.out.println(winner.getName() + "의 승리!");

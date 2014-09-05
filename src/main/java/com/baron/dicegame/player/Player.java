@@ -26,10 +26,6 @@ public class Player {
 		return totalScore;
 	}
 	
-	public void clearTotalScore(){
-		totalScore = 0;
-	}
-	
 	public void prepare(){
 		
 	}
